@@ -26,7 +26,27 @@ using namespace std;
 #define MAX_SONGS 256
 #define MAX_STREAMS 8196
 
-class Song;
+class Song
+{
+    private:
+        string title;
+        string artist;
+    public:
+        void setTitle(string title) { this->title = title; }
+        void setArtist(string title) { this->artist = artist; }
+        string getTitle() { return title; }
+        string getArtist() { return artist; }
+        Song()
+        {
+            title = "";
+            artist = "";
+        }
+        Song(string title, string artist)
+        {
+            this->title = title;
+            this->artist = artist;
+        }
+};
 
 int main(int argc, char *argv[])
 {
@@ -35,7 +55,7 @@ int main(int argc, char *argv[])
 
     vector<string> artists;
     vector<Song> songs;
-    vector<Song> streams;
+    //vector<Song> streams;
 
     srand(time(0));
 
@@ -66,10 +86,10 @@ int main(int argc, char *argv[])
     }
 
     //Open output file
-    ifstream inFS;
-    inFS.open("StreamingHistory.json");
+    ofstream outFS;
+    outFS.open("StreamingHistory.json");
 
-    if (!inFS.is_open())
+    if (!outFS.is_open())
     {
         cout << "Failed to open output file" << endl;
 
@@ -138,7 +158,7 @@ int main(int argc, char *argv[])
 
         if (n % 2 == 0)
         {
-            nameStream << adj << " ";
+            nameStream << adj;
         } else
         {
             nameStream << noun << "s";
@@ -156,7 +176,7 @@ int main(int argc, char *argv[])
         int artistIndex;
         string adj = "";
         string noun = "";
-        istringstream nameStream;
+        ostringstream nameStream;
 
         //Generate song name
         n = (rand() % 8) + 1;
@@ -208,11 +228,11 @@ int main(int argc, char *argv[])
 
         //Create Song object
         songs.resize(i + 1);
-        songs.at(i) = Song::Song(nameStream.str(), artists.at(artistIndex))
+        songs.at(i) = Song(nameStream.str(), artists.at(artistIndex));
     }
 
     //Generate numStreams streams and output to file
-    inFS << "[" << endl;
+    outFS << "[" << endl;
     
     for (int i = 1; i <= 365; i++)
     {
@@ -225,84 +245,62 @@ int main(int argc, char *argv[])
         {
             int tmp = rand() % songs.size();
 
-            inFS << "  {" << endl;
+            outFS << "  {" << endl;
 
-            inFS << "    \"endTime\" : " << "2018-";
+            outFS << "    \"endTime\" : \"" << "2018-";
             
             //Generate date
             if (i <= 1 && i <= 31)
             {
-                inFS << "01-" << setfill('0') << setw(2) << i; 
+                outFS << "01-" << setfill('0') << setw(2) << i; 
             } else if (i <= 32 && i <= 59)
             {
-                inFS << "02-" << setfill('0') << setw(2) << i % 31;
+                outFS << "02-" << setfill('0') << setw(2) << i % 31;
             } else if (i <= 60 && i <= 90)
             {
-                inFS << "03-" << setfill('0') << setw(2) << i % 59;
+                outFS << "03-" << setfill('0') << setw(2) << i % 59;
             } else if (i <= 91 && i <= 120)
             {
-                inFS << "04-" << setfill('0') << setw(2) << i % 90;
+                outFS << "04-" << setfill('0') << setw(2) << i % 90;
             } else if (i <= 121 && i <= 151)
             {
-                inFS << "05-" << setfill('0') << setw(2) << i % 120;
+                outFS << "05-" << setfill('0') << setw(2) << i % 120;
             } else if (i <= 152 && i <= 181)
             {
-                inFS << "06-" << setfill('0') << setw(2) << i % 151;
+                outFS << "06-" << setfill('0') << setw(2) << i % 151;
             } else if (i <= 182 && i <= 212)
             {
-                inFS << "07-" << setfill('0') << setw(2) << i % 181;
+                outFS << "07-" << setfill('0') << setw(2) << i % 181;
             } else if (i <= 213 && i <= 243)
             {
-                inFS << "08-" << setfill('0') << setw(2) << i % 212;
+                outFS << "08-" << setfill('0') << setw(2) << i % 212;
             } else if (i <= 244 && i <= 273)
             {
-                inFS << "09-" << setfill('0') << setw(2) << i % 243;
+                outFS << "09-" << setfill('0') << setw(2) << i % 243;
             } else if (i <= 274 && i <= 304)
             {
-                inFS << "10-" << setfill('0') << setw(2) << i % 273;
+                outFS << "10-" << setfill('0') << setw(2) << i % 273;
             } else if (i <= 305 && i <= 334)
             {
-                inFS << "11-" << setfill('0') << setw(2) << i % 304;
+                outFS << "11-" << setfill('0') << setw(2) << i % 304;
             } else if (i <= 335 && i <= 365)
             {
-                inFS << "12-" << setfill('0') << setw(2) << i % 334;
+                outFS << "12-" << setfill('0') << setw(2) << i % 334;
             }
 
-            inFS << " 12:00\"," << endl;
+            outFS << " 12:00\"," << endl;
 
-            inFS << "    \"artistName\" : \"" << songs.at(tmp).getArtist() << "\"," << endl;
+            outFS << "    \"artistName\" : \"" << songs.at(tmp).getArtist() << "\"," << endl;
 
-            inFS << "    \"trackName\" : \"" << songs.at(tmp).getTitle() << "\"," << endl;
+            outFS << "    \"trackName\" : \"" << songs.at(tmp).getTitle() << "\"," << endl;
 
             tmp = rand() % 270000;
 
-            inFS << "    \"msPlayed\" : " << tmp << endl;
+            outFS << "    \"msPlayed\" : " << tmp << endl;
 
-            inFS << "  }," << endl;
+            outFS << "  }," << endl;
         }
     }
 
-    inFS << "]";
+    outFS << "]";
 }
-
-class Song
-{
-    private:
-        string title;
-        string artist;
-    public:
-        void setTitle(string title) { this->title = title; }
-        void setArtist(string title) { this->artist = artist; }
-        string getTitle() { return title; }
-        string getArtist() { return artist; }
-        Song()
-        {
-            title = "";
-            artist = "";
-        }
-        Song(string title, string artist)
-        {
-            this->title = title;
-            this->artist = artist;
-        }
-};
