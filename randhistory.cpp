@@ -250,42 +250,42 @@ int main(int argc, char *argv[])
             outFS << "    \"endTime\" : \"" << "2018-";
             
             //Generate date
-            if (i <= 1 && i <= 31)
+            if (i >= 1 && i <= 31)
             {
                 outFS << "01-" << setfill('0') << setw(2) << i; 
-            } else if (i <= 32 && i <= 59)
+            } else if (i >= 32 && i <= 59)
             {
-                outFS << "02-" << setfill('0') << setw(2) << i % 31;
-            } else if (i <= 60 && i <= 90)
+                outFS << "02-" << setfill('0') << setw(2) << i - 31;
+            } else if (i >= 60 && i <= 90)
             {
-                outFS << "03-" << setfill('0') << setw(2) << i % 59;
-            } else if (i <= 91 && i <= 120)
+                outFS << "03-" << setfill('0') << setw(2) << i - 59;
+            } else if (i >= 91 && i <= 120)
             {
-                outFS << "04-" << setfill('0') << setw(2) << i % 90;
-            } else if (i <= 121 && i <= 151)
+                outFS << "04-" << setfill('0') << setw(2) << i - 90;
+            } else if (i >= 121 && i <= 151)
             {
-                outFS << "05-" << setfill('0') << setw(2) << i % 120;
-            } else if (i <= 152 && i <= 181)
+                outFS << "05-" << setfill('0') << setw(2) << i - 120;
+            } else if (i >= 152 && i <= 181)
             {
-                outFS << "06-" << setfill('0') << setw(2) << i % 151;
-            } else if (i <= 182 && i <= 212)
+                outFS << "06-" << setfill('0') << setw(2) << i - 151;
+            } else if (i >= 182 && i <= 212)
             {
-                outFS << "07-" << setfill('0') << setw(2) << i % 181;
-            } else if (i <= 213 && i <= 243)
+                outFS << "07-" << setfill('0') << setw(2) << i - 181;
+            } else if (i >= 213 && i <= 243)
             {
-                outFS << "08-" << setfill('0') << setw(2) << i % 212;
-            } else if (i <= 244 && i <= 273)
+                outFS << "08-" << setfill('0') << setw(2) << i - 212;
+            } else if (i >= 244 && i <= 273)
             {
-                outFS << "09-" << setfill('0') << setw(2) << i % 243;
-            } else if (i <= 274 && i <= 304)
+                outFS << "09-" << setfill('0') << setw(2) << i - 243;
+            } else if (i >= 274 && i <= 304)
             {
-                outFS << "10-" << setfill('0') << setw(2) << i % 273;
-            } else if (i <= 305 && i <= 334)
+                outFS << "10-" << setfill('0') << setw(2) << i - 273;
+            } else if (i >= 305 && i <= 334)
             {
-                outFS << "11-" << setfill('0') << setw(2) << i % 304;
-            } else if (i <= 335 && i <= 365)
+                outFS << "11-" << setfill('0') << setw(2) << i - 304;
+            } else if (i >= 335 && i <= 365)
             {
-                outFS << "12-" << setfill('0') << setw(2) << i % 334;
+                outFS << "12-" << setfill('0') << setw(2) << i - 334;
             }
 
             outFS << " 12:00\"," << endl;
